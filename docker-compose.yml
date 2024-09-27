@@ -1,0 +1,81 @@
+
+services:
+  jobsgee:
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    hostname: jobsgee
+    command: uv run uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+    environment:
+      - CELERY_BROKER_URL=redis://queejobs:6379/0
+      - CELERY_RESULT_BACKEND=redis://queejobs:6379/0
+    container_name: jobsgee
+    privileged: true
+    ports:
+      - "8086:8080"
+    volumes:
+      - .:/home/lapig
+
+    networks:
+      - web_lapig
+  worker:
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    command: uv run celery -A worker.celery worker --loglevel=info --logfile=logs/celery.log
+    volumes:
+      - .:/home/lapig
+      - ./volumes/gee.json:/var/sec/gee.json
+      - ./volumes/logs:/logs
+    environment:
+      - CELERY_BROKER_URL=redis://queejobs:6379/0
+      - CELERY_RESULT_BACKEND=redis://queejobs:6379/0
+    depends_on:
+      - queejobs
+    networks:
+      - web_lapig
+  dashboard:
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    command: uv run celery --broker=redis://queejobs:6379/0 flower --port=5555
+    ports:
+      - 5556:5555
+    volumes:
+      - .:/home/lapig
+    environment:
+      - CELERY_BROKER_URL=redis://queejobs:6379/0
+      - CELERY_RESULT_BACKEND=redis://queejobs:6379/0
+    depends_on:
+      - jobsgee
+      - queejobs
+      - worker
+    networks:
+      - web_lapig
+    
+  queejobs:
+    image: redis:7
+    hostname: queejobs
+    container_name: queejobs
+    
+    volumes:
+      - ./volumes/redis_data:/data
+    restart: always
+    networks:
+      - web_lapig
+
+  mongodbjobs:
+    image: mongo:4.4
+    hostname: mongodbjobs
+    container_name: mongodbjobs
+    volumes:
+      - ./volumes/mongodb_data:/data/db
+    restart: always
+    ports:
+      - "27050:27017"
+    networks:
+      - web_lapig
+
+networks:
+  web_lapig:
+    external: true

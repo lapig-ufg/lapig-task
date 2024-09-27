@@ -1,0 +1,24 @@
+[project]
+name = "lapig-jobs-gee"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "celery>=5.4.0",
+    "dynaconf>=3.2.6",
+    "earthengine-api>=1.1.1",
+    "fastapi>=0.115.0",
+    "flower>=2.0.1",
+    "geemap>=0.34.5",
+    "geopandas>=1.0.1",
+    "gunicorn>=23.0.0",
+    "loguru>=0.7.2",
+    "orjson>=3.10.7",
+    "pyamqp>=0.1.0.7",
+    "pydantic-geojson>=0.1.1",
+    "pydantic[email]>=2.9.2",
+    "pymongo>=4.9.1",
+    "redis>=5.0.8",
+    "uvicorn>=0.30.6",
+]
