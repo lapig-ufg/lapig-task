@@ -200,7 +200,7 @@ def gee_get_index_pasture(self, payload: PayloadSaveGeojson):
     
     with MongoClient(os.environ.get("MONGOURI", "mongodb://mongodbjobs:27017")) as cliente:
     # Seleciona o banco de dados e a coleção
-        banco_de_dados = cliente['lapig-jobs-gee']
+        banco_de_dados = cliente['lapig-task']
         colecao = banco_de_dados['results']
 
         # Insere o documento na coleção

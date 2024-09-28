@@ -21,22 +21,22 @@ if os.environ.get("TILES_ENV") == "production":
     logger.add(sys.stderr, level="INFO", format=confi_format)
 
 try:
-    logger.add("/logs/app/lapig-jobs-gee.log", rotation=rotation, level="INFO")
+    logger.add("/logs/app/lapig-task.log", rotation=rotation, level="INFO")
 except:
     logger.add(
-        "./logs/app/lapig-jobs-gee.log",
+        "./logs/app/lapig-task.log",
         rotation=rotation,
         level="INFO",
     )
 try:
     logger.add(
-        "/logs/app/lapig-jobs-gee_WARNING.log",
+        "/logs/app/lapig-task_WARNING.log",
         level="WARNING",
         rotation=rotation,
     )
 except:
     logger.add(
-        "./logs/app/lapig-jobs-gee_WARNING.log",
+        "./logs/app/lapig-task_WARNING.log",
         level="WARNING",
         rotation=rotation,
     )

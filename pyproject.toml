@@ -1,5 +1,5 @@
 [project]
-name = "lapig-jobs-gee"
+name = "lapig-task"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -19,6 +19,6 @@ dependencies = [
     "pydantic-geojson>=0.1.1",
     "pydantic[email]>=2.9.2",
     "pymongo>=4.9.1",
-    "redis>=5.0.8",
-    "uvicorn>=0.30.6",
+    "redis>=5.1.0",
+    "uvicorn>=0.31.0",
 ]

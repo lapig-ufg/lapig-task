@@ -867,7 +867,7 @@ wheels = [
 ]
 
 [[package]]
-name = "lapig-jobs-gee"
+name = "lapig-task"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
