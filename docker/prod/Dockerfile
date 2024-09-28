@@ -6,19 +6,18 @@ ENV URL_TO_APPLICATION_GITHUB='https://github.com/lapig-ufg/tiles.git' \
     
 LABEL maintainer="Jario Matos da Rocha <jairo@jairomr.com.br>"
 
+WORKDIR /home/suporte
 
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential git nano
 
-    
 RUN useradd -rm -d /home/suporte -s /bin/bash  -g root -G sudo -u 1001 suporte
-COPY ./pyproject.toml /home/suporte/pyproject.toml
-
+COPY . .
 
 RUN chown -R suporte:1001 /home/suporte
 
 USER suporte
-WORKDIR /home/suporte
-COPY . .
+
+
 RUN uv venv
 
