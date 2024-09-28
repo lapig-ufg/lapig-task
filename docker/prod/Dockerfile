@@ -13,12 +13,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y curl build-esse
     
 RUN useradd -rm -d /home/lapig -s /bin/bash  -g root -G sudo -u 1001 lapig
 COPY ./pyproject.toml /home/lapig/pyproject.toml
+COPY . .
 
+RUN chown -R lapig:lapig /home/lapig
 
 USER lapig
 WORKDIR /home/lapig
-
-COPY . .
-    
 RUN uv venv
 
