@@ -103,10 +103,10 @@ jobs:
       - name: Deploy Container
         id: deploy_container
         run: |
-          create_status_api=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_api.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_api  2>/dev/null)
-          create_status_dash=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_dashboard.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_dashboard  2>/dev/null)  
-          create_status_redis=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_redis.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_redis  2>/dev/null)
-          create_status_work=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_worker.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_worker 2>/dev/null)
+          create_status_api=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/api.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_api  2>/dev/null)
+          create_status_dash=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/dashboard.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_dashboard  2>/dev/null)  
+          create_status_redis=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/redis.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_redis  2>/dev/null)
+          create_status_work=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/worker.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_worker 2>/dev/null)
           echo $create_status_api
 
       - name: Start Container
