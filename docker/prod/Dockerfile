@@ -11,9 +11,8 @@ LABEL maintainer="Jario Matos da Rocha <jairo@jairomr.com.br>"
 RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential git nano
 
     
-RUN useradd -rm -d /home/lapig -s /bin/bash -u 1001 lapig
+RUN useradd -rm -d /home/lapig -s /bin/bash  -g root -G sudo -u 1001 lapig
 COPY ./pyproject.toml /home/lapig/pyproject.toml
-COPY ./uv.lock /home/lapig/uv.lock
 
 
 USER lapig
@@ -21,3 +20,4 @@ WORKDIR /home/lapig
 
 COPY . .
     
+RUN uv venv

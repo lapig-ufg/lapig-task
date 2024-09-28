@@ -113,9 +113,9 @@ jobs:
       - name: Start Container
         id: start_container
         run: |
+          start_status_redis=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_redis/start  2>/dev/null) 
           start_status_api=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_api/start  2>/dev/null) 
           start_status_dash=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_dashboard/start  2>/dev/null) 
-          start_status_redis=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_redis/start  2>/dev/null) 
           start_status_work=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_worker/start  2>/dev/null) 
           echo $start_status_api
 
