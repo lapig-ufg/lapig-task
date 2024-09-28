@@ -54,22 +54,9 @@ jobs:
           echo "LAPIG_AUTHOR_DATE=$(git log -1 --format=%cd --date=local)" >> "$GITHUB_OUTPUT"
           echo "LAPIG_PROJECT_NAME=$repo_name" >> "$GITHUB_OUTPUT"
           echo "LAPIG_COMMIT_DATE=$(git show -s --format=%ci)" >> "$GITHUB_OUTPUT"
-          
-          
-          echo "NODE_OPTIONS=--max-old-space-size=8096"  >> $GITHUB_ENV
 
       - name: Create version.json
         run: echo "{\"commitId\":\"$LAST_COMMIT_HASH\"}" > version.json
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12.22.2'
-
-      - name: Build Server and client
-        run: |
-          npm set progress=false
-          cd ${{ github.workspace }}/src/server && npm install
 
       - name: Build Docker
         run: |
