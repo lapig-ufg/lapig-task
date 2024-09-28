@@ -109,7 +109,7 @@ jobs:
           create_status_redis=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_redis.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_redis  2>/dev/null)
           create_status_work=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_worker.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_worker 2>/dev/null)
           echo "CREATE_STATUS='$create_status_api $create_status_dash $create_status_redis $create_status_work'" >> $GITHUB_ENV
-          echo $CREATE_STATUS
+          echo $create_status_api
 
       - name: Start Container
         id: start_container
