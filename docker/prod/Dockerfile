@@ -11,13 +11,13 @@ LABEL maintainer="Jario Matos da Rocha <jairo@jairomr.com.br>"
 RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential git nano
 
     
-RUN useradd -rm -d /home/lapig -s /bin/bash  -g root -G sudo -u 1001 lapig
-COPY ./pyproject.toml /home/lapig/pyproject.toml
+RUN useradd -rm -d /home/suporte -s /bin/bash  -g root -G sudo -u 1001 suporte
+COPY ./pyproject.toml /home/suporte/pyproject.toml
 COPY . .
 
-RUN chown -R lapig:lapig /home/lapig
+RUN chown -R suporte:1001 /home/suporte
 
-USER lapig
-WORKDIR /home/lapig
+USER suporte
+WORKDIR /home/suporte
 RUN uv venv
 
