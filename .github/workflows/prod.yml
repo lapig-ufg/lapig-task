@@ -97,7 +97,7 @@ jobs:
           delete_status_dash=$(curl -v -X DELETE -w "%{http_code}"  http://$DOCKER_HOST/containers/task_dashboard?force=true  2>/dev/null)
           delete_status_redis=$(curl -v -X DELETE -w "%{http_code}"  http://$DOCKER_HOST/containers/task_redis?force=true  2>/dev/null)  
           delete_status_work=$(curl -v -X DELETE -w "%{http_code}"  http://$DOCKER_HOST/containers/task_worker?force=true  2>/dev/null)  
-          echo "DELETE_STATUS=$delete_status_api $delete_status_dash $delete_status_redis $delete_status_work" >> $GITHUB_ENV
+          echo "DELETE_STATUS='$delete_status_api $delete_status_dash $delete_status_redis $delete_status_work'" >> $GITHUB_ENV
           echo $DELETE_STATUS
 
 
@@ -108,7 +108,7 @@ jobs:
           create_status_dash=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_dashboard.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_dashboard  2>/dev/null)  
           create_status_redis=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_redis.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_redis  2>/dev/null)
           create_status_work=$(curl -v -X POST -H 'Content-Type: application/json' -d @/compose/$application_name/task_worker.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_HOST/containers/create?name=task_worker 2>/dev/null)
-          echo "CREATE_STATUS=$create_status_api $create_status_dash $create_status_redis $create_status_work" >> $GITHUB_ENV
+          echo "CREATE_STATUS='$create_status_api $create_status_dash $create_status_redis $create_status_work'" >> $GITHUB_ENV
           echo $CREATE_STATUS
 
       - name: Start Container
@@ -118,7 +118,7 @@ jobs:
           start_status_dash=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_dashboard/start  2>/dev/null) 
           start_status_redis=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_redis/start  2>/dev/null) 
           start_status_work=$(curl -v -X POST -s -o /dev/null -w "%{http_code}"   http://$DOCKER_HOST/containers/task_worker/start  2>/dev/null) 
-          echo "START_STATUS=$start_status_api $start_status_dash $start_status_redis $start_status_work" >> $GITHUB_ENV
+          echo "START_STATUS='$start_status_api $start_status_dash $start_status_redis $start_status_work'" >> $GITHUB_ENV
           echo $START_STATUS
 
   post-deploy:
