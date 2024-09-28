@@ -21,3 +21,4 @@ WORKDIR /home/lapig
 COPY . .
     
 RUN uv venv
+
