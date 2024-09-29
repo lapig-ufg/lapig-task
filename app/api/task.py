@@ -1,24 +1,30 @@
 
 from fastapi.responses import JSONResponse
 import geopandas as gpd
+
+
+from app.models.oauth2 import UserInfo
+from app.oauth2 import has_role
 from worker import gee_get_index_pasture
 from app.models.payload import PayloadSaveGeojson
+import os
 
-from fastapi import APIRouter, HTTPException, Request, Query
+from fastapi import APIRouter, Depends, HTTPException, Request, Query
 from app.config import logger
 from celery.result import AsyncResult
-from pydantic import UUID4
 
 router = APIRouter()
 
-@router.post("/savegeom")
+
+@router.post("/savegeom" )
 async def savegeom(
     payload: PayloadSaveGeojson,
     request: Request,
     crs: int = Query(4326, description="EPSG code for the geometry"),
-    
+    user_data: UserInfo = Depends(has_role(['savegeom']))  # This should be a function that retrieves user data from the request.
 ):
-    MAX_HECTARES = 40_000
+
+    MAXHECTARES = os.environ.get('MAXHECTARES',40_000)
     geojson = payload.dict().get('geojson',gpd.GeoDataFrame())
     logger.info(f"Received payload: {geojson}")
     try:
@@ -27,11 +33,16 @@ async def savegeom(
             return HTTPException(status_code=400, detail="Empty GeoDataFrame or more than one feature.")
         if gdf.geometry.type[0] != "Polygon":
             return HTTPException(status_code=400, detail="Geometry must be a Polygon.")
-        if gdf.to_crs(5880).area.iloc[0] / 10_000 > MAX_HECTARES:
-            return HTTPException(status_code=400, detail=f"Geometry area must be less than {MAX_HECTARES} hectares.")
+        if gdf.to_crs(5880).area.iloc[0] / 10_000 > MAXHECTARES:
+            return HTTPException(status_code=400, detail=f"Geometry area must be less than {MAXHECTARES} hectares.")
         logger.info('Geometry is valid')
+        logger.info(user_data)
         try:
-            task = gee_get_index_pasture.delay(payload.dict())
+            dict_payload = {
+                **payload.dict(),
+                'request_user': user_data
+            }
+            task = gee_get_index_pasture.delay(dict_payload)
         except Exception as e:
             logger.exception(f"Failed to create task: {e}")
             raise HTTPException(status_code=400, detail="Failed to create task.")

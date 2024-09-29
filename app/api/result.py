@@ -5,7 +5,7 @@ from pydantic import UUID4
 router = APIRouter()
 
 
-@router.get("/pasture/{task_id}")
+@router.get("/{task_id}")
 async def result_pasture(task_id):
     with MongoClient(os.environ.get("MONGOURI", "mongodb://mongodbjobs:27017")) as cliente:
     # Seleciona o banco de dados e a coleção

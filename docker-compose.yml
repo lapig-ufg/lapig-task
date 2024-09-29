@@ -5,16 +5,23 @@ services:
       context: .
       dockerfile: ./docker/prod/Dockerfile
     hostname: jobsgee
-    command: uv run uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+    command: uv run uvicorn main:app   --host 0.0.0.0 --port 8080 --reload
     environment:
+      - HTTPS=false
       - CELERY_BROKER_URL=redis://queejobs:6379/0
       - CELERY_RESULT_BACKEND=redis://queejobs:6379/0
+      - SERVER_URL=${SERVER_URL}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - ADMIN_CLIENT_SECRET=${ADMIN_CLIENT_SECRET}
+      - REALM=${REALM}
+      - CALLBACK_URI=${CALLBACK_URI}
     container_name: jobsgee
     privileged: true
     ports:
       - "8086:8080"
     volumes:
-      - .:/home/lapig
+      - .:/home/suporte
 
     networks:
       - web_lapig
@@ -24,7 +31,7 @@ services:
       dockerfile: ./docker/prod/Dockerfile
     command: uv run celery -A worker.celery worker --loglevel=info --logfile=logs/celery.log
     volumes:
-      - .:/home/lapig
+      - .:/home/suporte
       - ./volumes/gee.json:/var/sec/gee.json
       - ./volumes/logs:/logs
     environment:
@@ -42,7 +49,7 @@ services:
     ports:
       - 5556:5555
     volumes:
-      - .:/home/lapig
+      - .:/home/suporte
     environment:
       - CELERY_BROKER_URL=redis://queejobs:6379/0
       - CELERY_RESULT_BACKEND=redis://queejobs:6379/0

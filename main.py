@@ -1,37 +1,81 @@
-import typing
 
-import ee
-import orjson
-from fastapi import FastAPI, HTTPException
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from google.oauth2 import service_account
-from app.config import settings, logger, start_logger
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.responses import RedirectResponse
+from unidecode import unidecode
 
+from app.config import logger, settings, start_logger
 from app.router import created_routes
 
+import os 
 
-
-app = FastAPI()
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     start_logger()
-    #try:
-    #    service_account_file = '/home/lapig/.local/gee.json'
-    #    logger.debug(f"Initializing service account {service_account_file}")
-    #    credentials = service_account.Credentials.from_service_account_file(
-    #        service_account_file,
-    #        scopes=["https://www.googleapis.com/auth/earthengine.readonly"],
-    #    )
-    #    ee.Initialize(credentials)
-
-    #    print("GEE Initialized successfully.")
-    #except Exception as e:
-    #    raise HTTPException(status_code=500, detail="Failed to initialize GEE")
+    yield
+    logger.info("Shutting down GEE")
     
+app = FastAPI(lifespan=lifespan)
+
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request, exc):
+    start_code = exc.status_code
+    logger.info(exc)
+
+    if request.url.path.split('/')[1] == 'api':
+        try:
+            return JSONResponse(
+                content={'status_code': start_code, 'message': exc.detail},
+                status_code=start_code,
+                headers=exc.headers,
+            )
+        except:
+            return JSONResponse(
+                content={'status_code': start_code, 'message': exc.detail},
+                status_code=start_code
+            )
+            
+    base_url = request.base_url
+    if settings.HTTPS:
+        base_url = f'{base_url}'.replace('http://', 'https://')
+    return {
+            'request': request,
+            'base_url': base_url,
+            'info': '',
+            'status': start_code,
+            'message': exc.detail,
+        }
+    
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    try:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            
+            content=jsonable_encoder({'detail': unidecode(str(exc.errors())), 'body': unidecode(str(exc.body))}),
+            headers={
+                'X-Download-Detail': f'{unidecode(str(exc.errors()))}',
+                'X-Download-Body': f'{unidecode(str(exc.body))}',
+            },
+        )
+    except Exception as e:
+        logger.exception(f'Validation exception: {e} {exc.errors()} {exc.body}')
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=jsonable_encoder({'detail': unidecode(str(exc.errors())), 'body': unidecode(str(exc.body))}),
+        )
+
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the GEE FastAPI"}
+    return RedirectResponse('/redoc')
 
 app = created_routes(app)

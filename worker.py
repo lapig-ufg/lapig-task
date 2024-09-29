@@ -1,19 +1,16 @@
 import os
-import time
+
 import json
 
 from celery import Celery
 from app.utils.gee2chat import get_chat_pasture, get_chat_pasture_vigor
-from app.models.payload import PayloadSaveGeojson
+from app.models.payload import PayloadSaveGeojson, ResultPayload
 from celery.utils.log import get_task_logger
-
-logger = get_task_logger(__name__)
-
 from pymongo import MongoClient
-
 import ee
 import geemap
 
+logger = get_task_logger(__name__)
 
 celery = Celery(__name__)
 celery.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://quees:6379/0")
@@ -23,7 +20,7 @@ celery.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://qu
 
 
 @celery.task(name="gee_get_index_pasture",bind=True)
-def gee_get_index_pasture(self, payload: PayloadSaveGeojson):
+def gee_get_index_pasture(self, payload: ResultPayload):
     geojson = payload.get('geojson')
     def gee_credentials(private_key_file):
         data = json.load(open(private_key_file))
@@ -208,40 +205,3 @@ def gee_get_index_pasture(self, payload: PayloadSaveGeojson):
     return result
     
     
-if __name__ == '__main__':
-    gee_get_index_pasture({
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          [
-            [
-              -48.19902411568995,
-              -15.50226885170754
-            ],
-            [
-              -48.19902411568995,
-              -15.613399185567161
-            ],
-            [
-              -48.035908961874185,
-              -15.613399185567161
-            ],
-            [
-              -48.035908961874185,
-              -15.50226885170754
-            ],
-            [
-              -48.19902411568995,
-              -15.50226885170754
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }
-    }
-  ]
-})
