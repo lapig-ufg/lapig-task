@@ -13,9 +13,7 @@ services:
       - SERVER_URL=${SERVER_URL}
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
-      - ADMIN_CLIENT_SECRET=${ADMIN_CLIENT_SECRET}
       - REALM=${REALM}
-      - CALLBACK_URI=${CALLBACK_URI}
     container_name: jobsgee
     privileged: true
     ports:
