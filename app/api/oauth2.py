@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.oauth2 import CLIENT_ID, CLIENT_SECRET, TOKEN_URL
 
 
-routes = APIRouter()
+router = APIRouter()
 
 
 # Modelo de resposta para o token
@@ -18,7 +18,7 @@ class Token(BaseModel):
     token_type: str
 
 # Rota de login para obter o token de acesso
-@routes.post("/login", response_model=Token)
+@router.post("/login", response_model=Token)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     # Dados para a requisição ao Keycloak
     payload = {

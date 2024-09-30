@@ -20,6 +20,8 @@ services:
       - "8086:8080"
     volumes:
       - .:/home/suporte
+      - ./volumes/gee.json:/var/sec/gee.json
+      - ./volumes/logs:/logs
 
     networks:
       - web_lapig
