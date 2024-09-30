@@ -1,6 +1,8 @@
 
 from contextlib import asynccontextmanager
+import json
 
+import ee
 from fastapi import FastAPI, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
@@ -17,6 +19,14 @@ import os
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     start_logger()
+    def gee_credentials(private_key_file):
+        data = json.load(open(private_key_file))
+        #logger.info(data)
+        gee_account = data['client_email']
+        return ee.ServiceAccountCredentials(gee_account, private_key_file)
+    
+    service_account_file = '/var/sec/gee.json'
+    ee.Initialize(gee_credentials(service_account_file))
     yield
     logger.info("Shutting down GEE")
     
