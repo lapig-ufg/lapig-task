@@ -6,6 +6,7 @@ services:
       dockerfile: ./docker/prod/Dockerfile
     hostname: jobsgee
     command: uv run uvicorn main:app   --host 0.0.0.0 --port 8080 --reload
+    
     environment:
       - HTTPS=false
       - CELERY_BROKER_URL=redis://queejobs:6379/0
