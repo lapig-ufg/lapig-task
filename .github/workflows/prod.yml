@@ -92,7 +92,7 @@ jobs:
 
       - name: Delete Container
         id: delete_container
-        continue-on-error: true
+        
         run: |
           /compose/resetapp.sh --title "Task api" \
           --container "task_api" \
