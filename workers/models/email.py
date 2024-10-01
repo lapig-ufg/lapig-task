@@ -11,8 +11,8 @@ class EmailResponse(BaseModel):
 
 
 class MessageHTML(BaseModel):
-    template_name: str
-    content: dict
+    template: str
+    content: EmailResponse
 
 class SendEmail(BaseModel):
     receiver_email: EmailStr

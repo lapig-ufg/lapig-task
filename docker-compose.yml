@@ -14,6 +14,10 @@ services:
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
       - REALM=${REALM}
+      - SERVER_EMAIL=${SERVER_EMAIL}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_SENDER=${EMAIL_SENDER}
+      - EMAIL_PASSWORD={EMAIL_PASSWORD}
     container_name: jobsgee
     privileged: true
     ports:

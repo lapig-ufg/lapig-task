@@ -24,3 +24,45 @@ class ResultPayload(BaseModel):
 class PayloadSaveGeojson(BaseModel):
     user: User
     geojson: LapigFeatureCollectionModel
+    model_config = {
+      "user": {
+        "name": "Jairo Matos da Rocha",
+        "email": "devjairomr@gmail.com"
+      },
+      "geojson": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -49.271489630116974,
+                  -16.600834057263143
+                ],
+                [
+                  -49.271489630116974,
+                  -16.613595063494913
+                ],
+                [
+                  -49.25488564150811,
+                  -16.613595063494913
+                ],
+                [
+                  -49.25488564150811,
+                  -16.600834057263143
+                ],
+                [
+                  -49.271489630116974,
+                  -16.600834057263143
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          }
+        }
+      ]
+    }
+    }
