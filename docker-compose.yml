@@ -41,6 +41,10 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://queejobs:6379/0
       - CELERY_RESULT_BACKEND=redis://queejobs:6379/0
+      - SERVER_EMAIL=${SERVER_EMAIL}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_SENDER=${EMAIL_SENDER}
+      - EMAIL_PASSWORD={EMAIL_PASSWORD}
     depends_on:
       - queejobs
     networks:
