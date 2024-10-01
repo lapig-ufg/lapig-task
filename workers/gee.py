@@ -192,9 +192,4 @@ def task_index_pasture(task_id: str, payload: ResultPayload):
         # Insere o documento na coleção
         resultado = colecao.insert_one(result)
         
-        
-    
-    
-    
-    
     return result
