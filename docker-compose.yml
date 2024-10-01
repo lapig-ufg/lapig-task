@@ -24,8 +24,8 @@ services:
       - "8086:8080"
     volumes:
       - .:/home/suporte
-      - ./volumes/gee.json:/var/sec/gee.json
-      - ./volumes/logs:/logs
+      - ../volumes/gee.json:/var/sec/gee.json
+      - ../volumes/logs:/logs
 
     networks:
       - web_lapig
@@ -33,11 +33,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/Dockerfile
-    command: uv run celery -A worker.celery worker --loglevel=info --logfile=logs/celery.log
+    command: uv run celery -A worker.celery worker --loglevel=info -E --logfile=logs/celery.log
     volumes:
       - .:/home/suporte
-      - ./volumes/gee.json:/var/sec/gee.json
-      - ./volumes/logs:/logs
+      - ../volumes/gee.json:/var/sec/gee.json
+      - ../volumes/logs:/logs
     environment:
       - CELERY_BROKER_URL=redis://queejobs:6379/0
       - CELERY_RESULT_BACKEND=redis://queejobs:6379/0
@@ -74,7 +74,7 @@ services:
     container_name: queejobs
     
     volumes:
-      - ./volumes/redis_data:/data
+      - ../volumes/redis_data:/data
     restart: always
     networks:
       - web_lapig
@@ -84,7 +84,7 @@ services:
     hostname: mongodbjobs
     container_name: mongodbjobs
     volumes:
-      - ./volumes/mongodb_data:/data/db
+      - ../volumes/mongodb_data:/data/db
     restart: always
     ports:
       - "27050:27017"
