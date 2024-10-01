@@ -401,7 +401,7 @@ wheels = [
 
 [[package]]
 name = "earthengine-api"
-version = "1.1.1"
+version = "1.1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-python-client" },
@@ -411,9 +411,9 @@ dependencies = [
     { name = "httplib2" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a1/95/1ef47a039d9786f4412a705ebf159572216a8c570f07e066e34375e04ad2/earthengine_api-1.1.1.tar.gz", hash = "sha256:0a83d984b632faa9e98392e601e12dbd8cad811555094898cb21f211d522e5e2", size = 408583 }
+sdist = { url = "https://files.pythonhosted.org/packages/c5/50/4b94ff3f61d013f891a4c4d31b9e45e1d13754281d5595f36a2f11033c1d/earthengine_api-1.1.2.tar.gz", hash = "sha256:ed26cfd42df49f66122833a64492753f50fbfb577a9251739c1f8114e29f6c73", size = 408609 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/49/23/c8bd1bf4a2e9a4902aede21ee6f68af9db441d2afc1669b57060bac5b67d/earthengine_api-1.1.1-py3-none-any.whl", hash = "sha256:381ee5383168c45281600f4a1d9fe82526f93bbc5b0c3c2007d3d04a455fcac3", size = 454292 },
+    { url = "https://files.pythonhosted.org/packages/2c/ac/3540cb52f822efc9389ce0e39553e65fefd64adddac871444725f4673138/earthengine_api-1.1.2-py3-none-any.whl", hash = "sha256:4385a7b5d027d972135ebfeed0a09defd3e33d010247f97b6959edf3e3e42605", size = 454330 },
 ]
 
 [[package]]
@@ -1050,7 +1050,7 @@ requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.12.3" },
     { name = "celery", specifier = ">=5.4.0" },
     { name = "dynaconf", specifier = ">=3.2.6" },
-    { name = "earthengine-api", specifier = ">=1.1.1" },
+    { name = "earthengine-api", specifier = ">=1.1.2" },
     { name = "fastapi", specifier = ">=0.115.0" },
     { name = "fastapi-keycloak-middleware", specifier = ">=1.1.0" },
     { name = "flower", specifier = ">=2.0.1" },
@@ -1064,8 +1064,8 @@ requires-dist = [
     { name = "pydantic-geojson", specifier = ">=0.1.1" },
     { name = "pyjwt", specifier = ">=2.9.0" },
     { name = "pymongo", specifier = ">=4.9.1" },
-    { name = "python-keycloak", specifier = ">=4.4.0" },
-    { name = "python-multipart", specifier = ">=0.0.11" },
+    { name = "python-keycloak", specifier = ">=4.5.0" },
+    { name = "python-multipart", specifier = ">=0.0.12" },
     { name = "redis", specifier = ">=5.1.0" },
     { name = "unidecode", specifier = ">=1.3.8" },
     { name = "uvicorn", specifier = ">=0.31.0" },
@@ -1684,7 +1684,7 @@ wheels = [
 
 [[package]]
 name = "python-keycloak"
-version = "4.4.0"
+version = "4.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "async-property" },
@@ -1694,18 +1694,18 @@ dependencies = [
     { name = "requests" },
     { name = "requests-toolbelt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a8/02/84b0f0b2031e017a028de4e7853dd4975e998f3b90b5e2106179695101b8/python_keycloak-4.4.0.tar.gz", hash = "sha256:f063f4c24f81817c66470b61dbdba5fa5555cc5c236c17a198909ece40482c69", size = 62420 }
+sdist = { url = "https://files.pythonhosted.org/packages/e9/9c/99e49baf9623ead78e5937bbde98b4a2655f8ee648ba955513cf73a21ba2/python_keycloak-4.5.0.tar.gz", hash = "sha256:8f6e6a7d266370b5e9cca57c61bc25a88caea4561598ed67484f13454a7c070a", size = 62542 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f1/77/9f7ed7b9f846951e136199842400ed3ec942866a6ba1f6a8d8655ed7e426/python_keycloak-4.4.0-py3-none-any.whl", hash = "sha256:b7c1e65b2d501ddf924797701d8bd1372f7772ad67532e689456d911e3790ad2", size = 76135 },
+    { url = "https://files.pythonhosted.org/packages/cf/1f/bb423cf51e216978a56aeec2a4c6a26d854d93afe0d87d67e783312983e3/python_keycloak-4.5.0-py3-none-any.whl", hash = "sha256:4faa1263891f67a2311ed700f5de94ad2fcbe0a7af503d8b04a752eb1ce01300", size = 76237 },
 ]
 
 [[package]]
 name = "python-multipart"
-version = "0.0.11"
+version = "0.0.12"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c0/53/8dcdebf0d2573ea363e82bb1c6d54d863796f0ae7703e5acdb91544bbd86/python_multipart-0.0.11.tar.gz", hash = "sha256:1d377f074b69a47dd204c990de57a7cf03d9b85695a3e57faec32d54b78e3e48", size = 34728 }
+sdist = { url = "https://files.pythonhosted.org/packages/16/6e/7ecfe1366b9270f7f475c76fcfa28812493a6a1abd489b2433851a444f4f/python_multipart-0.0.12.tar.gz", hash = "sha256:045e1f98d719c1ce085ed7f7e1ef9d8ccc8c02ba02b5566d5f7521410ced58cb", size = 35713 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8d/94/de592c06e7e7af593be38089a7f72acdc1fec30e7814501a939b0d33589b/python_multipart-0.0.11-py3-none-any.whl", hash = "sha256:0597982db95c0ce012d8bd91b8c9eb2b45c7e095122c05cd8fb7ee4c5bf78df6", size = 22580 },
+    { url = "https://files.pythonhosted.org/packages/f5/0b/c316262244abea7481f95f1e91d7575f3dfcf6455d56d1ffe9839c582eb1/python_multipart-0.0.12-py3-none-any.whl", hash = "sha256:43dcf96cf65888a9cd3423544dd0d75ac10f7aa0c3c28a175bbcd00c9ce1aebf", size = 23246 },
 ]
 
 [[package]]
