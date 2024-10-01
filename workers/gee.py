@@ -1,3 +1,4 @@
+import os
 from workers.utils.gee2chat import get_chat_pasture, get_chat_pasture_vigor
 from app.models.payload import ResultPayload
 from celery.utils.log import get_task_logger
@@ -190,4 +191,10 @@ def task_index_pasture(task_id: str, payload: ResultPayload):
 
         # Insere o documento na coleção
         resultado = colecao.insert_one(result)
+        
+        
+    
+    
+    
+    
     return result
