@@ -10,11 +10,12 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import RedirectResponse
 from unidecode import unidecode
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import logger, settings, start_logger
 from app.router import created_routes
+from app.utils.cors import allow_origins, origin_regex
 
-import os 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,6 +33,17 @@ async def lifespan(app: FastAPI):
     
 app = FastAPI(lifespan=lifespan)
 
+# Configurações CORS com expressões regulares para subdomínios dinâmicos
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allow_origins,  # Lista de origens estáticas (deixe vazio se estiver usando regex)
+    allow_methods=["*"],  # Métodos permitidos
+    allow_headers=["*"],  # Cabeçalhos permitidos
+    allow_credentials=True,  # Permite o envio de cookies/credenciais
+    allow_origin_regex=origin_regex,
+    expose_headers=["X-Response-Time"],  # Cabeçalhos expostos
+    max_age=3600,  # Tempo máximo para cache da resposta preflight
+)
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request, exc):
