@@ -96,21 +96,25 @@ jobs:
         run: |
           /compose/resetapp.sh --title "Task api" \
           --container "task_api" \
+          --file "api" \
           --github "https://github.com/${{ github.repository }}" \
           --commit "${{ needs.build.outputs.LAST_COMMIT_HASH }}" \
           ${{ needs.build.outputs.APPLICATION_NAME }}
           /compose/resetapp.sh --title "Task Dashboard" \
           --container "task_dashboard" \
+          --file "dashboard" \
           --github "https://github.com/${{ github.repository }}" \
           --commit "${{ needs.build.outputs.LAST_COMMIT_HASH }}" \
           ${{ needs.build.outputs.APPLICATION_NAME }}
           /compose/resetapp.sh --title "Task Redis" \
           --container "task_redis" \
+          --file "redis" \
           --github "https://github.com/${{ github.repository }}" \
           --commit "${{ needs.build.outputs.LAST_COMMIT_HASH }}" \
           ${{ needs.build.outputs.APPLICATION_NAME }}
           /compose/resetapp.sh --title "Task Worker" \
           --container "task_worker" \
+          --file "worker" \
           --github "https://github.com/${{ github.repository }}" \
           --commit "${{ needs.build.outputs.LAST_COMMIT_HASH }}" \
           ${{ needs.build.outputs.APPLICATION_NAME }}
