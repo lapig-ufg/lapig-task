@@ -30,7 +30,7 @@ def gee_get_index_pasture(self, payload: ResultPayload):
             "title": "CONCLUÍDA - Requisição de Análise de Geometria (Área)",
             "hello": f"Olá, {payload['user']['name']}",
             "body": "Conforme solicitação, a análise de dados da área submetida está completa. Você consegue acessar os resultados no link abaixo:",
-            "url":"https://atlasdaspastagens.ufg.br/map/{self.request.id}",
+            "url":f"https://atlasdaspastagens.ufg.br/results/{self.request.id}",
             "regards":f"Atenciosamente",
             "team":"Equipe do Atlas das Pastagens do Brasil"
             }
