@@ -2,11 +2,13 @@ import os
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.utils import formatdate
 
 
 from workers.models.email import SendEmail
 from workers.render import template
 from workers.utils.emial import html_to_text
+
 
 
 def send_email(payload: SendEmail):
@@ -23,6 +25,7 @@ def send_email(payload: SendEmail):
         message["Subject"] = payload['subject']
         message["From"] = sender_email
         message["To"] = receiver_email
+        message["Date"] = formatdate(localtime=True) 
 
         to_render = payload['message']
         html = template.get_template(to_render['template']).render(to_render['content'])
