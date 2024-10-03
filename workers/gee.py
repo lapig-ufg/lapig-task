@@ -2,7 +2,7 @@ import os
 from workers.utils.gee2chat import get_chat_pasture, get_chat_pasture_vigor
 from app.models.payload import ResultPayload
 from celery.utils.log import get_task_logger
-from datetime import datetime
+from datetime import datetime, timezone
 from pymongo import MongoClient
 import ee
 import geemap
@@ -11,7 +11,7 @@ import json
 logger = get_task_logger(__name__)
 
 def task_index_pasture(task_id: str, payload: ResultPayload):
-    payload['created_at'] = datetime.now(tz=datetime.timezone.utc)
+    payload['created_at'] = datetime.now(tz=timezone.utc)
     geojson = payload.get('geojson')
     def gee_credentials(private_key_file):
         data = json.load(open(private_key_file))
