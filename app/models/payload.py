@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr
 from typing import List
 from app.models.oauth2 import UserInfo
 from pydantic_geojson import FeatureModel, FeatureCollectionModel, PolygonModel
-from datetime import datetime
+from datetime import datetime, timezone
 
 class User(BaseModel):
     name: str
@@ -20,7 +20,7 @@ class LapigFeatureCollectionModel(FeatureCollectionModel):
 
 class ResultPayload(BaseModel):
     user: User
-    created_at: datetime = datetime.now(tz=datetime.timezone.utc)
+    created_at: datetime = datetime.now(tz=timezone.utc)
     geojson: LapigFeatureCollectionModel
     request_user: UserInfo
 class PayloadSaveGeojson(BaseModel):
