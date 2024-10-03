@@ -55,7 +55,7 @@ async def get_payload(token: str = Security(oauth2_scheme)) -> dict:
             token
         )
     except Exception as e:
-        logger.exception(f"Error decoding token: {e}")
+        #logger.exception(f"Error decoding token: {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=str(e), # "Invalid authentication credentials",
