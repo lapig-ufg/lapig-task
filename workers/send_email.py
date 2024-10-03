@@ -11,6 +11,9 @@ from workers.utils.emial import html_to_text
 
 def send_email(payload: SendEmail):
     try:
+        SERVER_MAIL = os.environ.get('SERVER_EMAIL')
+        PORT_EMAIL = os.environ.get("EMAIL_PORT",465)
+        
         sender_email = os.environ.get('EMAIL_SENDER')
         password = os.environ.get('EMAIL_PASSWORD')
         receiver_email = payload['receiver_email']
@@ -28,15 +31,21 @@ def send_email(payload: SendEmail):
         message.attach(MIMEText(html, "html"))
 
         # Create secure connection with server and send email
+        
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(os.environ.get('SERVER_EMAIL'), os.environ.get("EMAIL_PORT",465), context=context) as server:
-            
-            server.login(sender_email, password)
-            server.sendmail(
-                sender_email, receiver_email, message.as_string()
-            )
+
+        try:
+            # Conecta ao servidor de e-mail usando TLS
+            with smtplib.SMTP(SERVER_MAIL,  PORT_EMAIL) as server:
+                server.starttls(context=context)  # Inicia a conexão TLS
+                server.login(sender_email, password)  # Faz login no servidor SMTP
+                server.sendmail(sender_email, receiver_email, message.as_string())  # Envia o e-mail
+                print("E-mail enviado com sucesso!")
+
+        except Exception as e:
+            raise Exception(f"Error sending email: {e} \n {sender_email} - {receiver_email}\n {SERVER_MAIL}:{PORT_EMAIL}")
     except Exception as e:
-        raise Exception(f"Error sending email: {e} {sender_email} {password} {receiver_email}")
+        raise Exception(f"Error sending email: {e}")
     return {"status": "Email sent successfully"}
 
 
