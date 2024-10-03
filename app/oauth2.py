@@ -49,7 +49,6 @@ async def get_idp_public_key():
 # Get the payload/token from keycloak
 async def get_payload(token: str = Security(oauth2_scheme)) -> dict:
     key= await get_idp_public_key()
-    logger.info(f"token {token}")
     try:
         
         return keycloak_openid.decode_token(
