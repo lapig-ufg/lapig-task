@@ -41,6 +41,9 @@ async def savegeom_gdf(
     files: List[UploadFile] = File(...),
     user_data: UserInfo = Depends(has_role(['savegeom']))  # This should be a function that retrieves user data from the request.
 ):
+    for file in files:
+        if file.size > 5242880 :
+            raise HTTPException(status_code=413, detail="File size exceeds 5MB.")
     return __savegeom__(check_geofiles(files), {'name':name,'email':email}, user_data)
     
 
@@ -79,6 +82,6 @@ def __savegeom__(gdf: gpd.GeoDataFrame, user: User,user_data: UserInfo):
         'geojson':__checkgeom__(gdf),
         'request_user': user_data
     }
-    logger.info(f"Starting task with payload: {dict_payload}")
+    #logger.info(f"Starting task with payload: {dict_payload}")
     task = gee_get_index_pasture.delay(dict_payload)
     return JSONResponse({"task_id": task.id})
