@@ -18,7 +18,7 @@ celery.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://qu
 
 
 
-@celery.task(name="gee_get_index_pasture",bind=True)
+@celery.task(name="Index Pasture GEE",bind=True)
 def gee_get_index_pasture(self, payload: ResultPayload):
     result = task_index_pasture(self.request.id, payload)
     payload_send_mail ={
