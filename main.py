@@ -1,6 +1,7 @@
 
 from contextlib import asynccontextmanager
 import json
+import os
 
 import ee
 from fastapi import FastAPI, status
@@ -64,7 +65,7 @@ async def http_exception_handler(request, exc):
             )
             
     base_url = request.base_url
-    if settings.HTTPS:
+    if os.environ.get('HTTPS',False):
         base_url = f'{base_url}'.replace('http://', 'https://')
     return {
             'request': request,
