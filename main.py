@@ -48,19 +48,17 @@ app.add_middleware(
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request, exc):
-    start_code = exc.status_code
-    logger.info(exc)
-
+    start_code = str(exc.status_code)
     if request.url.path.split('/')[1] == 'api':
         try:
             return JSONResponse(
-                content={'status_code': start_code, 'message': exc.detail},
+                content={'status_code': start_code, 'message': str(exc.detail)},
                 status_code=start_code,
                 headers=exc.headers,
             )
         except:
             return JSONResponse(
-                content={'status_code': start_code, 'message': exc.detail},
+                content={'status_code': start_code, 'message': str(exc.detail)},
                 status_code=start_code
             )
             
